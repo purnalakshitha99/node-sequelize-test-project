@@ -2,6 +2,7 @@ const express = require('express');
 const sequelize = require('./config/database');
 const app = express();
 const userRoutes = require('./routes/UserRoutes');
+const db = require('./models/index');
 
 
 
@@ -11,7 +12,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/api', userRoutes);
+app.use('/api/auth', userRoutes);
 
 sequelize.authenticate()
     .then(() => {
@@ -24,8 +25,8 @@ sequelize.authenticate()
  const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));   
 
-const User = require('./models/User');
 
-sequelize.sync({ alter: true })
+
+db.sequelize.sync({ alter: true })
   .then(() => console.log('🛠️ Models synchronized'))
   .catch(err => console.error('❌ Sync error:', err));
