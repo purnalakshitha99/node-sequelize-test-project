@@ -15,4 +15,6 @@ const db = {
   // Post
 };
 
+// Export the db object containing all models
+
 module.exports = db;
