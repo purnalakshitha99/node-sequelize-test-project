@@ -56,7 +56,7 @@ exports.login = async (req, res) => {
   }
 };
 
-
+//get all users
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll();
@@ -65,3 +65,19 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+//delete user by id
+exports.deleteUserById = async (req,res)=>{
+  try{
+
+    const userId = req.params.id;
+    const user = await User.findByPk(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    await user.destroy();
+    res.json({ message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
